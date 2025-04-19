@@ -56,7 +56,7 @@
             # Apple Silicon Macs can install Rosetta, which enables the system to run binaries for Intel CPUs transparently
             softwareupdate --install-rosetta --agree-to-license
 
-            git clone git@github.com:vishwassharma/dotfiles.git ~/.dotfiles
+            git clone git@github.com:jangidankit1998/dotfiles.git ~/.dotfiles
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # nix run nix-darwin -- switch --flake ~/.dotfiles
             nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/.dotfiles
@@ -71,12 +71,12 @@
       };
 
       # Configuration for intel x86_64-linux
-      apps."x86_64-linux".default = let
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      apps."x86_64-darwin".default = let
+        pkgs = nixpkgs.legacyPackages."x86_64-darwin";
         init = pkgs.writeShellApplication {
           name = "init";
           text = ''
-            git clone git@github.com:vishwassharma/dotfiles.git ~/.dotfiles
+            git clone git@github.com:jangidankit1998/dotfiles.git ~/.dotfiles
             # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             nix run home-manager/master -- switch --flake ~/.dotfiles
           '';
@@ -93,15 +93,15 @@
       };
 
       homeConfigurations = {
-        "vishwas" = mkHm {
+        "ankitjangid" = mkHm {
             extraModules = [ ./nix/home/personal.nix ];
             arch = "aarch64-darwin";
         };
-        "vishwas@macbook" = mkHm {
+        "ankitjangid@macbook" = mkHm {
             extraModules = [ ./nix/home/personal.nix ];
-            arch = "aarch64-darwin";
+            arch = "x86_64-darwin";
         };
-        "vishwas@desk" = mkHm {
+        "ankitjangid@desk" = mkHm {
             extraModules = [ ./nix/home/linux.nix ];
             arch = "x86_64-linux";
         };
