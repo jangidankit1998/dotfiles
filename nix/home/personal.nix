@@ -10,5 +10,5 @@ in {
   ];
   home.packages = common.packages ++ [
     pkgs.poetry
-  ]
+  ];
 }
