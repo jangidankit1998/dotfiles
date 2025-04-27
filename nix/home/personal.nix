@@ -8,7 +8,5 @@ in {
   imports = [
     ./common.nix
   ];
-  home.packages = common.packages ++ [
-    pkgs.poetry
-  ];
+  home.packages = common.packages;
 }
