@@ -68,6 +68,7 @@
       uv
       plantuml
       zulu # java
+      sqlline
       # END Runtime
 
     ]
