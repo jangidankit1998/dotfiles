@@ -581,7 +581,7 @@
     installBatSyntax = false;
     settings = {
       font-family = "UbuntuMono Nerd Font Mono";
-      font-size = 14;
+      font-size = 16;
       font-thicken = false;
 
       cursor-style = "block";
