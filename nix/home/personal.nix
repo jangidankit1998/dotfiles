@@ -6,6 +6,7 @@ in {
   services.kdeconnect.enable = lib.mkForce false;
   home.username = "ankitjangid";
   home.enableNixpkgsReleaseCheck = false;
+
   home.homeDirectory = "/Users/ankitjangid";
   imports = [
     ./common.nix
