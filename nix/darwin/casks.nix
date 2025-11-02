@@ -4,6 +4,6 @@
   "font-ubuntu-sans-nerd-font"
   "secretive"
   "wireshark"
-  "ghostty"
+  # "ghostty"
   # "chromedriver"
 ]

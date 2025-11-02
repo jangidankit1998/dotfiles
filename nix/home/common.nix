@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, lib, config, ...}: {
   nixpkgs.config.allowUnfree = true;
 
   # This value determines the Home Manager release that your configuration is
@@ -21,9 +21,27 @@
     ".cdk.json".source = ../../cdk.json;
     # ".vsnip/elixir.json".source = ../../vsnip/elixir.json;
     ".xterm-256color.terminfo".source = ../../xterm-256color.terminfo;
+    # NPM configuration
+    ".npmrc".text = ''
+      prefix=${config.home.homeDirectory}/.npm-global
+      cache=${config.xdg.cacheHome}/npm
+      init-author-name=Ankit Jangid
+      init-author-email=jangidankit1998@gmail.com
+      init-license=MIT
+    '';
+
+    # Ensure npm-global directory exists
+    ".npm-global/.keep".text = "";
+
+    # # Claude Code
+    # ".claude/commands".source = ../../softwares/claude/commands;
+    # ".claude/commands".recursive = true;
+    # ".claude/agents".source = ../../softwares/claude/agents;
+    # ".claude/agents".recursive = true;
+    # # END Claude Code
   };
 
-  # xdg.enable = true;
+  xdg.enable = true;
 
   programs.tmux = {
     enable = true;
@@ -206,27 +224,32 @@
       # NIX_BUILD_SHELL = "$SHELL";
       NIX_BUILD_SHELL = "${pkgs.zsh}/bin/zsh";
       DIRENV_SUBSHELL = "1";
+      NPM_CONFIG_PREFIX = "${config.home.homeDirectory}/.npm-global";
+      NODE_PATH = "${config.home.homeDirectory}/.npm-global/lib/node_modules";
     };
 
     shellAliases = {
       dev = "tmux new -A -s main";
     };
 
-    initExtra = ''
-      export EDITOR=nvim
+    # initContent = ''
+    #   export EDITOR=nvim
+    #
+    #   if uname -a | grep -i "darwin" > /dev/null; then
+    #     eval $(/opt/homebrew/bin/brew shellenv)
+    #   fi
+    #
+    #   path() {
+    #     echo $PATH | tr ':' '\n'
+    #   }
+    #
+    #   # aliases that use env vars or spaces
+    #   export PATH="$HOME/.local/bin:$HOME/.bin:$PATH"
+    #   # export PATH="$HOME/.local/bin:$PATH"
+    #   # Add npm global bin to PATH
+    #   export PATH="$HOME/.npm-global/bin:$PATH"
+    # '';
 
-      if uname -a | grep -i "darwin" > /dev/null; then
-        eval $(/opt/homebrew/bin/brew shellenv)
-      fi
-
-      path() {
-        echo $PATH | tr ':' '\n'
-      }
-
-      # aliases that use env vars or spaces
-      export PATH="$HOME/.bin:$PATH"
-      # export PATH="$HOME/.local/bin:$PATH"
-    '';
   };
 
   programs.bash = {
@@ -239,6 +262,8 @@
       EDITOR = "nvim";
       NIX_BUILD_SHELL = "$SHELL";
       DIRENV_SUBSHELL = "1";
+      NPM_CONFIG_PREFIX = "${config.home.homeDirectory}/.npm-global";
+      NODE_PATH = "${config.home.homeDirectory}/.npm-global/lib/node_modules";
     };
 
     shellAliases = {
@@ -575,20 +600,20 @@
   #   enable = false;
   # };
 
-  programs.ghostty = {
-    enable = true;
-    package = null;
-    installBatSyntax = false;
-    settings = {
-      font-family = "UbuntuMono Nerd Font Mono";
-      font-size = 16;
-      font-thicken = false;
-
-      cursor-style = "block";
-      cursor-style-blink = true;
-      shell-integration-features = "no-cursor";
-    };
-  };
+  # programs.ghostty = {
+  #   enable = true;
+  #   package = null;
+  #   installBatSyntax = false;
+  #   settings = {
+  #     font-family = "UbuntuMono Nerd Font Mono";
+  #     font-size = 16;
+  #     font-thicken = false;
+  #
+  #     cursor-style = "block";
+  #     cursor-style-blink = true;
+  #     shell-integration-features = "no-cursor";
+  #   };
+  # };
 
   programs.lazygit = {
     enable = true;

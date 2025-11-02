@@ -1,4 +1,5 @@
 {pkgs, ...}: let
+
   packages = with pkgs;
     [
       # System Tools
@@ -53,22 +54,31 @@
       
       curl
       awscli2
+      aws-sam-cli
+      ssm-session-manager-plugin
+      socat
+      
+      # AI Tools
+      # END AI Tools
 
       # Runtime
-      rustc
-      cargo
+      # rustc
+      # cargo
       nodejs
+      corepack
       # nodePackages.aws-cdk
+      wget
+
+      # claude-code
       # Python Runtime
       (ruby.withPackages (ps: with ps; [ neovim ]))
-      (python312.withPackages (ps: with ps; [ pip pyelftools click pip-tools jupyter virtualenv ]))
+      (python312.withPackages (ps: with ps; [ pip pyelftools click pip-tools jupyter virtualenv]))
       # Poetry 
       poetry
-      # END Poetry 
       uv
+      # END Poetry 
       plantuml
       zulu # java
-      sqlline
       # END Runtime
 
     ]

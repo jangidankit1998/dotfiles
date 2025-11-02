@@ -6,7 +6,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      # url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lix-module = {
@@ -32,10 +33,11 @@
       # Make Home
       mkHm = {
         extraModules ? [],
-        arch,
+        system,
       }:
         home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${arch};
+          # pkgs = nixpkgs.legacyPackages.${arch};
+          pkgs = nixpkgs.legacyPackages.${system};
           modules =
             [
               # {
@@ -78,7 +80,8 @@
           text = ''
             git clone git@github.com:jangidankit1998/dotfiles.git ~/.dotfiles
             # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            nix run home-manager/master -- switch --flake ~/.dotfiles
+            # nix run home-manager/master -- switch --flake ~/.dotfiles
+            nix run ${home-manager} -- switch --flake ~/.dotfiles#x86_64-darwin
           '';
         };
       in {
@@ -88,6 +91,7 @@
 
       darwinConfigurations = {
         "macbook" = mkDarwin {
+          system = "aarch64-darwin";
           extraDarwinModules = [./nix/darwin/personal.nix];
         };
       };
@@ -95,19 +99,24 @@
       homeConfigurations = {
         "ankitjangid" = mkHm {
             extraModules = [ ./nix/home/personal.nix ];
-            arch = "aarch64-darwin";
+            # arch = "aarch64-darwin";
+            system = "aarch64-darwin";
         };
         "ankitjangid@macbook" = mkHm {
+            # pkgs = nixpkgs.legacyPackages.x86_64-linux;
             extraModules = [ ./nix/home/personal.nix ];
-            arch = "x86_64-darwin";
+            # arch = "x86_64-darwin";
+            system = "x86_64-darwin";
         };
         "ankitjangid@desk" = mkHm {
             extraModules = [ ./nix/home/linux.nix ];
-            arch = "x86_64-linux";
+            # arch = "x86_64-linux";
+            system = "x86_64-linux";
         };
         "ubuntu" = mkHm {
           extraModules = [ ./nix/home/ubuntu.nix ];
-          arch = "x86_64-linux";
+          # arch = "x86_64-linux";
+          system = "x86_64-linux";
         };
       };
     };
