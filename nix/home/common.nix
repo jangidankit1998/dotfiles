@@ -646,7 +646,7 @@
   programs.home-manager.enable = true;
 
   services.kdeconnect = {
-    enable = true;
-    package = pkgs.kdeconnect;   # correct package in unstable
+    enable = false;
+    package = null; # pkgs.kdeconnect;   # correct package in unstable
   };
 }
