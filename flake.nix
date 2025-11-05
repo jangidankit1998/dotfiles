@@ -21,9 +21,10 @@
   outputs = { self, nixpkgs, home-manager, nix-darwin, lix-module, ... }@inputs:
     let
       # Make Darwin
-      mkDarwin = {extraDarwinModules ? {}}:
+      mkDarwin = {system, extraDarwinModules ? []}:
         nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
+          # system = "aarch64-darwin";
+          inherit system;
           specialArgs = {inherit self;};
           modules =
             [
@@ -83,7 +84,8 @@
             git clone git@github.com:jangidankit1998/dotfiles.git ~/.dotfiles
             # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             # nix run home-manager/master -- switch --flake ~/.dotfiles
-            nix run ${home-manager} -- switch --flake ~/.dotfiles#x86_64-darwin
+            # nix run ${home-manager} -- switch --flake ~/.dotfiles#x86_64-darwin
+            nix run ${home-manager} -- switch --flake ~/.dotfiles#ankitjangid@macbook
           '';
         };
       in {
@@ -92,11 +94,17 @@
       };
 
       darwinConfigurations = {
-        "macbook" = mkDarwin {
+        macbook = mkDarwin {
           system = "aarch64-darwin";
-          extraDarwinModules = [./nix/darwin/personal.nix];
+          extraDarwinModules = [ ./nix/darwin/personal.nix ];
+        };
+
+        macbook-intel = mkDarwin {
+          system = "x86_64-darwin";
+          extraDarwinModules = [ ./nix/darwin/personal.nix ];
         };
       };
+
 
       homeConfigurations = {
         "ankitjangid@macbook-2" = mkHm {
