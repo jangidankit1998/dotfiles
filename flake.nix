@@ -1,13 +1,15 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
-      # url = "github:nix-community/home-manager/release-24.11";
+      # url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lix-module = {
@@ -97,10 +99,11 @@
       };
 
       homeConfigurations = {
-        "ankitjangid" = mkHm {
+        "ankitjangid@macbook-2" = mkHm {
             extraModules = [ ./nix/home/personal.nix ];
             # arch = "aarch64-darwin";
-            system = "aarch64-darwin";
+            # system = "aarch64-darwin";
+            system = "x86_64-darwin";
         };
         "ankitjangid@macbook" = mkHm {
             # pkgs = nixpkgs.legacyPackages.x86_64-linux;
